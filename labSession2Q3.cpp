@@ -22,7 +22,7 @@ struct Room{
     Distance width;
 };
 int calcAreaFeet(Room room){
-    return room.length.feet*room.length.feet;
+    return room.length.feet*room.width.feet;
 }
 int calcAreaInch(Room room){
     room.length.feet=room.length.inches*12;
