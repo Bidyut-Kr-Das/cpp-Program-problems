@@ -1,99 +1,139 @@
 /*
-Question:
-Create stack using linked list. Implement push and pop method
+Lab Session IV: Data Structures using Objects
+
+1. Create a linked list using class with new and delete. Implement the following operations:
+(a) Insert at beginning and end.
+(b) Delete from any location.
 */
 
 #include <iostream>
 using namespace std;
-
-class node
+class Node
 {
     int data;
-    node *ptr;
+    Node *ptr;
 
 public:
-    void setData(int val);          // sets data of the node
-    void setPointer();              // sets pointer to null
-    void setPointer(node *ptr1);    // sets pointer to ptr1
-    void displayData();             // prints data
-    int getData();                  // returs data of the node
-    node *getPointer();             // returns pointer
-    friend node *createNode(int);   // creates a node with value=val and pointer =NULL
-    friend node *push(node *, int); // pushes a node into the stack
-    friend node *pop(node *);       // pops a node out of the stack
-    friend void display(node *);    // displays the whole stack--takes argument as Head of the list
+    void setData(int val);                  // sets data of the Node
+    void setPointer();                      // sets pointer to null
+    void setPointer(Node *ptr1);            // sets pointer to ptr1
+    void displayData();                     // prints data
+    int getData();                          // returs data of the Node
+    Node *getPointer();                     // returns pointer
+    friend Node *createNode(int);           // creates a Node with value=val and pointer =NULL
+    friend Node *insertAtHead(Node *, int); // Inserts a Node at the beginning
+    friend Node *insertAtEnd(Node *, int);  // Insert a Node at the end
+    friend void display(Node *);            // displays the whole linked list--takes argument as Head of the list
+    friend Node *deleteNode(Node *, int);   // deletes Node with value passed as an argument
 };
-void node ::setData(int val)
+void Node ::setData(int val)
 {
     data = val;
 }
-void node ::setPointer()
+void Node ::setPointer()
 {
     ptr = NULL;
 }
-void node ::setPointer(node *ptr1)
+void Node ::setPointer(Node *ptr1)
 {
     ptr = ptr1;
 }
-void node ::displayData()
+void Node ::displayData()
 {
     cout << data << endl;
 }
-int node ::getData()
+int Node ::getData()
 {
     return data;
 }
-node *node ::getPointer()
+Node *Node ::getPointer()
 {
     return ptr;
 }
 
-node *createNode(int val)
+Node *createNode(int val)
 {
-    node *a = new node();
+    Node *a = new Node();
     a->setData(val);
     a->setPointer();
     return a;
 }
 
-node *push(node *Head, int val)
+Node *insertAtHead(Node *Head, int val)
 {
-    node *a = createNode(val);
-    node *p1;
+    Node *a = createNode(val);
+    Node *p1;
     p1 = Head;
     a->setPointer(p1);
     Head = a;
     return Head;
 }
-
-node *pop(node *Head)
+Node *insertAtEnd(Node *Head, int val)
 {
-    node *p1;
+    Node *a = createNode(val);
+    Node *p1, *p2;
     p1 = Head;
-    Head = p1->getPointer();
-    delete p1;
+    // p2 = Head;
+    while (p1->getPointer() != NULL)
+    {
+        p1 = p1->getPointer();
+    }
+    p1->setPointer(a);
+
     return Head;
 }
-void display(node *Head)
+void display(Node *Head)
 {
-    node *p = Head;
+    Node *p = Head;
     while (p != NULL)
     {
         p->displayData();
         p = p->getPointer();
     }
 }
+Node *deleteNode(Node *Head, int val)
+{
+    Node *p1, *p2;
+    p1 = Head;
+    p2 = p1->getPointer();
+    if (p1->getData() == val)
+    {
+        Head = p2;
+        delete p1;
+    }
+    else
+    {
+        while (p2->getData() != val)
+        {
+            p1 = p1->getPointer();
+            p2 = p1->getPointer();
+        }
+        if (p2 == NULL)
+        {
+            cout << "No Node found with value " << val << endl;
+        }
+        else
+        {
+            p1->setPointer(p2->getPointer());
+            delete p2;
+        }
+    }
+    return Head;
+}
 
 int main()
 {
-    node *stackTop = createNode(5);
-    stackTop = push(stackTop, 7);
-    stackTop = push(stackTop, 8);
-    stackTop = push(stackTop, 9);
-    stackTop = pop(stackTop);
-    stackTop = push(stackTop, 4);
-    stackTop = pop(stackTop);
-    display(stackTop);
+    Node *Head = createNode(1);
+    Head = insertAtHead(Head, 0);
+    Head = insertAtEnd(Head, 2);
+    Head = insertAtEnd(Head, 3);
+    Head = insertAtEnd(Head, 4);
+    Head = insertAtHead(Head, 6);
+    cout << "The linked list is: " << endl;
+    display(Head);
+    cout << "After deleting 3 the linked list is " << endl;
+    Head = deleteNode(Head, 3);
+    display(Head);
 
     return 0;
 }
