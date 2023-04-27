@@ -36,7 +36,7 @@ public:
         cout << "The id is: " << id << endl;
     }
 };
-class Manager : public Employee
+class Manager : public Employee //This will work for private, public, protected inheritance
 {
     double salary;
 
@@ -57,8 +57,9 @@ public:
         cout << "The designation is: " << designation << endl;
     }
 };
-class Scientist : public Employee
+class Scientist : public Employee //This will work for private, public, protected inheritance
 {
+
     double salary;
 
 public:
