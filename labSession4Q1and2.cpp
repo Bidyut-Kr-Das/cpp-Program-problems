@@ -12,6 +12,8 @@ Question:
 */
 #include <iostream>
 #include <string>
+#include <ios>
+#include <limits>
 
 using namespace std;
 
@@ -36,6 +38,8 @@ public:
         id = id + idGiven;
         cout << "Enter marks: ";
         cin >> marks;
+        // cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     void displayData()
     { // Displays data of student.
@@ -46,7 +50,9 @@ public:
     friend void setName(Student *s)
     { // Friend function to set names of students taken pointer parameter
         cout << "Enter name of the student: ";
-        cin >> s->name;
+        // cin >> s->name;
+        // cin.clear();
+        getline(cin, s->name);
     }
 };
 int main()
@@ -54,6 +60,7 @@ int main()
     Student s1, s2;
     setName(&s1);
     s1.setData();
+    // cout << "Enter second data" << endl;
     setName(&s2);
     s2.setData();
     s1.displayData();
