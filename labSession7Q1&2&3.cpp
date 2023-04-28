@@ -15,6 +15,8 @@ Create one object of manager and one object of scientist. Take input from user f
 */
 
 #include <iostream>
+#include <ios>
+#include <limits>
 using namespace std;
 
 class Employee
@@ -25,8 +27,9 @@ class Employee
 public:
     void setData(void)
     {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Enter name: ";
-        cin >> name;
+        getline(cin, name);
         cout << "Enter id: ";
         cin >> id;
     }
@@ -36,7 +39,7 @@ public:
         cout << "The id is: " << id << endl;
     }
 };
-class Manager : public Employee //This will work for private, public, protected inheritance
+class Manager : public Employee
 {
     double salary;
 
@@ -57,9 +60,8 @@ public:
         cout << "The designation is: " << designation << endl;
     }
 };
-class Scientist : public Employee //This will work for private, public, protected inheritance
+class Scientist : public Employee
 {
-
     double salary;
 
 public:
