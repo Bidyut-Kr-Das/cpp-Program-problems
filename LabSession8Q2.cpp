@@ -6,9 +6,11 @@ of players. Involve member func- tions to obtain player with maximum matches pla
 #include <iostream>
 #include <ios>
 #include <limits>
+#include <string>
 using namespace std;
 class Player
 {
+
 public:
     string name;
     unsigned int match;
@@ -16,9 +18,11 @@ public:
     double averageRun;
     void setData()
     {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Enter name of the player: ";
         getline(cin, name);
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        // cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.clear();
         cout << "Enter matches played: ";
         cin >> match;
         cout << "Enter runs: ";
@@ -29,7 +33,7 @@ public:
     {
         cout << "Name of the player is: " << name << endl;
         cout << "Total run scored by the player: " << run << endl;
-        cout << "Total mathces played by the player: " << match << endl;
+        cout << "Total matches played by the player: " << match << endl;
         cout << "Average run of that player: " << averageRun << endl;
     }
     friend Player findMaxMatch(Player[], int);  // finds the player with maximum mathces played
@@ -40,6 +44,7 @@ Player findMaxRun(Player a[], int size)
 {
     Player winner;
     int max = a[0].run;
+    winner = a[0];
     for (int i = 1; i < size; i++)
     {
         if (a[i].run > max)
@@ -54,6 +59,7 @@ Player findMaxMatch(Player a[], int size)
 {
     Player winner;
     int max = a[0].match;
+    winner = a[0];
     for (int i = 1; i < size; i++)
     {
         if (a[i].match > max)
@@ -68,6 +74,7 @@ Player findMaxAvgRun(Player a[], int size)
 {
     Player winner;
     double max = a[0].averageRun;
+    winner = a[0];
     for (int i = 1; i < size; i++)
     {
         if (a[i].averageRun > max)
